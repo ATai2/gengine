@@ -6,9 +6,17 @@ import com.atai.module.gengine.utils.EngineExcutor;
 import com.atai.module.gengine.utils.RequestResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @RestController("/engine")
@@ -31,6 +39,26 @@ public class EngineController {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+
+
+        return RequestResult.withSuccess(null);
+    }
+    @GetMapping(value = "/list2")
+    public RequestResult<ScriptEntity> getScriptList2(@RequestParam int times) {
+
+        log.info("param:" + times);
+        log.info("threadname:" + Thread.currentThread().getName());
+        ResourceLoader resourceLoader = new DefaultResourceLoader();
+        Resource resource = resourceLoader.getResource("classpath:static/scripts/helloarg.groovy");
+        try {
+            File file = resource.getFile();
+            Map<String,Object> map=new HashMap<>();
+            map.put("name", "jack");
+            Object o = EngineExcutor.invokeShelFilelWithCache(file, map);
+            int i = 2;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
 
