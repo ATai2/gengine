@@ -12,8 +12,10 @@ import java.util.concurrent.ConcurrentHashMap;
 public class EngineExcutor {
 
     private static final GroovyScriptEngineFactory scriptEngineFactory = new GroovyScriptEngineFactory();
-    private static GroovyShell groovyShell = new GroovyShell();
-    private static ConcurrentHashMap<String, ScriptEngine> scriptEngineConcurrentHashMap = new ConcurrentHashMap<>();
+    private static final GroovyShell groovyShell = new GroovyShell();
+    private static final ConcurrentHashMap<String, ScriptEngine> scriptEngineConcurrentHashMap = new ConcurrentHashMap<>();
+    static ConcurrentHashMap<String, Script> scriptMap = new ConcurrentHashMap<>();
+
 
     public static Object invoke(String scriptText, String function, Object... objects) throws Exception {
         GroovyClassLoader classLoader = new GroovyClassLoader();
@@ -68,9 +70,17 @@ public class EngineExcutor {
     }
 
 
-    p
     public static <T> T invokeShell(String scriptText, String function, Object... objects) throws Exception {
         Script script = groovyShell.parse(scriptText);
+        return (T) InvokerHelper.invokeMethod(script, function, objects);
+    }
+
+    public static <T> T invokeShellWithCache(String scriptText, String function, Object... objects) throws Exception {
+        Script script = scriptMap.get(scriptText);
+        if (script == null) {
+            script = groovyShell.parse(scriptText);
+            scriptMap.put(scriptText, script);
+        }
         return (T) InvokerHelper.invokeMethod(script, function, objects);
     }
 }
