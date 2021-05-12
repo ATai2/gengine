@@ -68,6 +68,7 @@ public class EngineExcutor {
     }
 
 
+    p
     public static <T> T invokeShell(String scriptText, String function, Object... objects) throws Exception {
         Script script = groovyShell.parse(scriptText);
         return (T) InvokerHelper.invokeMethod(script, function, objects);
