@@ -7,7 +7,11 @@ import org.codehaus.groovy.runtime.InvokerHelper;
 
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
+import java.io.File;
+import java.nio.charset.StandardCharsets;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiConsumer;
 
 public class EngineExcutor {
 
@@ -15,6 +19,7 @@ public class EngineExcutor {
     private static final GroovyShell groovyShell = new GroovyShell();
     private static final ConcurrentHashMap<String, ScriptEngine> scriptEngineConcurrentHashMap = new ConcurrentHashMap<>();
     static ConcurrentHashMap<String, Script> scriptMap = new ConcurrentHashMap<>();
+    static ConcurrentHashMap<String, Script> scriptFileMap = new ConcurrentHashMap<>();
 
 
     public static Object invoke(String scriptText, String function, Object... objects) throws Exception {
@@ -23,10 +28,22 @@ public class EngineExcutor {
         try {
             GroovyObject groovyObject = (GroovyObject) groovyClass.newInstance();
             return groovyObject.invokeMethod(function, objects);
-        } catch (InstantiationException e) {
+        } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        }
+        return null;
+    }
+
+    public static Object invokeClearCache(String scriptText, String function, Object... objects) throws Exception {
+        GroovyClassLoader classLoader = new GroovyClassLoader();
+        Class groovyClass = classLoader.parseClass(scriptText);
+        try {
+            GroovyObject groovyObject = (GroovyObject) groovyClass.newInstance();
+            return groovyObject.invokeMethod(function, objects);
+        } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
+        } finally {
+            classLoader.clearCache();
         }
         return null;
     }
@@ -46,6 +63,23 @@ public class EngineExcutor {
         }
         return null;
     }
+
+    public static Object runFileWithCache(File file, Object... objects) throws Exception {
+
+//        GroovyCodeSource groovyCodeSource = new GroovyCodeSource(file, StandardCharsets.UTF_8.name());
+//        Class groovyClass = classLoader.parseClass(groovyCodeSource, true);
+//        try {
+//            GroovyObject groovyObject = (GroovyObject) groovyClass.newInstance();
+//
+//            return groovyObject.invokeMethod(function, objects);
+//        } catch (InstantiationException e) {
+//            e.printStackTrace();
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        }
+        return null;
+    }
+
 
     public static Object clearCache(String scriptText) {
         classLoader.clearCache();
@@ -83,4 +117,24 @@ public class EngineExcutor {
         }
         return (T) InvokerHelper.invokeMethod(script, function, objects);
     }
+
+    public static Object invokeShelFilelWithCache(File file, Map<String,Object> params) throws Exception {
+        Script script = scriptFileMap.get(file.getName());
+        Binding binding = new Binding();
+        params.forEach(new BiConsumer<String, Object>() {
+            @Override
+            public void accept(String s, Object o) {
+                binding.setVariable(s,o);
+            }
+        });
+        if (script == null) {
+            script = groovyShell.parse(file);
+            scriptFileMap.put(file.getName(), script);
+        }
+        script.setBinding(binding);
+        return script.evaluate(file);
+//        return (T) InvokerHelper.invokeMethod(script, function, objects);
+    }
+
+
 }

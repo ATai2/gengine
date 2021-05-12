@@ -25,7 +25,7 @@ public class EngineController {
             Object[] param = {8, 7};
             System.out.println("times:" + i);
             try {
-                log.info(String.valueOf( EngineExcutor.invokeEngine("def cal(int a, int b){\n" +
+                log.info(String.valueOf( EngineExcutor.invokeClearCache("def cal(int a, int b){\n" +
                         "    return a+b\n" +
                         "}", "cal", param).toString()));
             } catch (Exception e) {
