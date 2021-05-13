@@ -103,6 +103,20 @@ public class EngineExcutor {
         return (T) ((Invocable) scriptEngine).invokeFunction(function, objects);
     }
 
+    /**
+     * GroovyShell
+     * GroovyShell允许在Java类中（甚至Groovy类）求任意Groovy表达式的值。您可使用Binding对象输入参数给表达式，并最终通过GroovyShell返回Groovy表达式的计算结果。
+     * 通常用来运行"script片段"或者一些零散的表达式(Expression)
+     * ————————————————
+     * 版权声明：本文为CSDN博主「夜里慢慢行456」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+     * 原文链接：https://blog.csdn.net/u013257767/article/details/105762624/
+     * @param scriptText
+     * @param function
+     * @param objects
+     * @param <T>
+     * @return
+     * @throws Exception
+     */
 
     public static <T> T invokeShell(String scriptText, String function, Object... objects) throws Exception {
         Script script = groovyShell.parse(scriptText);
