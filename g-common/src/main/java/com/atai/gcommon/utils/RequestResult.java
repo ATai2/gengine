@@ -1,4 +1,4 @@
-package com.atai.module.gengine.utils;
+package com.atai.gcommon.utils;
 
 import lombok.Data;
 

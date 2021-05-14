@@ -19,18 +19,18 @@ import java.util.Scanner;
 @Configuration
 public class FlowConfig {
 
-    @Bean
-    public ProcessEngine processEngine() {
-        ProcessEngineConfiguration cfg = new StandaloneProcessEngineConfiguration()
-                .setJdbcUrl("jdbc:h2:mem:flowable;DB_CLOSE_DELAY=-1")
-                .setJdbcUsername("sa")
-                .setJdbcPassword("")
-                .setJdbcDriver("org.h2.Driver")
-                .setDatabaseSchemaUpdate(ProcessEngineConfiguration.DB_SCHEMA_UPDATE_TRUE);
-
-        ProcessEngine processEngine = cfg.buildProcessEngine();
-        return processEngine;
-    }
+//    @Bean
+//    public ProcessEngine processEngine() {
+//        ProcessEngineConfiguration cfg = new StandaloneProcessEngineConfiguration()
+//                .setJdbcUrl("jdbc:h2:mem:flowable;DB_CLOSE_DELAY=-1")
+//                .setJdbcUsername("sa")
+//                .setJdbcPassword("")
+//                .setJdbcDriver("org.h2.Driver")
+//                .setDatabaseSchemaUpdate(ProcessEngineConfiguration.DB_SCHEMA_UPDATE_TRUE);
+//
+//        ProcessEngine processEngine = cfg.buildProcessEngine();
+//        return processEngine;
+//    }
 
     public static void main(String[] args) {
 //      基础配置
