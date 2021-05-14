@@ -1,6 +1,7 @@
 package com.atai.gengine.gflow.config;
 
 
+import com.atai.gengine.gflow.service.MyService;
 import org.flowable.engine.*;
 import org.flowable.engine.history.HistoricActivityInstance;
 import org.flowable.engine.impl.cfg.StandaloneProcessEngineConfiguration;
@@ -8,6 +9,7 @@ import org.flowable.engine.repository.Deployment;
 import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.task.api.Task;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,6 +20,31 @@ import java.util.Scanner;
 
 @Configuration
 public class FlowConfig {
+
+    @Bean
+    public CommandLineRunner init(final RepositoryService repositoryService,
+                                  final RuntimeService runtimeService,
+                                  final TaskService taskService,
+                                  final MyService myService) {
+
+        return new CommandLineRunner() {
+            @Override
+            public void run(String... strings) throws Exception {
+                System.out.println("Number of process definitions : "
+                        + repositoryService.createProcessDefinitionQuery().count());
+                System.out.println("Number of tasks : " + taskService.createTaskQuery().count());
+                String deploymentId = repositoryService
+                        .createDeployment()
+                        .addClasspathResource("oneTaskProcess.bpmn20.xml")
+                        .deploy()
+                        .getId();
+//                runtimeService.startProcessInstanceByKey("oneTaskProcess");
+                System.out.println("Number of tasks after process start: "
+                        + taskService.createTaskQuery().count());
+                myService.createDemoUsers();
+            }
+        };
+    }
 
 //    @Bean
 //    public ProcessEngine processEngine() {

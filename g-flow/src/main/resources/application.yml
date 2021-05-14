@@ -17,6 +17,8 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
+    flowable:
+      enabled: true
 
 spring:
   application:
