@@ -35,6 +35,15 @@ public class MyService {
         runtimeService.startProcessInstanceByKey("oneTaskProcess", variables);
     }
 
+    /**
+     * 完成任务
+     * @param taskId
+     * @return
+     */
+    public void completeTask(String taskId,Map<String,Object> variables) {
+        taskService.complete(taskId,variables);
+    }
+
     public List<Task> getTasks(String assignee) {
         return taskService.createTaskQuery().taskAssignee(assignee).list();
     }

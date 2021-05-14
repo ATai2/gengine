@@ -14,7 +14,21 @@ public class RequestResult<T> {
         this.success = true;
     }
 
-    public static <T> RequestResult  withSuccess(T data) {
+    public static <T> RequestResult withSuccess(T data) {
         return new RequestResult<T>(data);
+    }
+
+    public static RequestResult withError(String msg) {
+        RequestResult requestResult = new RequestResult(null);
+        requestResult.setSuccess(false);
+        requestResult.setMsg(msg);
+        return requestResult;
+    }
+
+    public static RequestResult withError() {
+        RequestResult requestResult = new RequestResult(null);
+        requestResult.setSuccess(false);
+        requestResult.setMsg("error");
+        return requestResult;
     }
 }

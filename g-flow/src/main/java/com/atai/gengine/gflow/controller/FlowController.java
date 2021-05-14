@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class FlowController {
@@ -37,6 +38,17 @@ public class FlowController {
             dtos.add(new TaskRepresentation(task.getId(), task.getName()));
         }
         return dtos;
+    }
+
+    @PostMapping("/complete/{id}")
+    public RequestResult completeTask(@PathVariable("id") String taskId, @RequestBody Map<String,Object> variables) {
+        try {
+            myService.completeTask(taskId,variables);
+        return RequestResult.withSuccess(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return RequestResult.withError();
+        }
     }
 
     static class StartProcessRepresentation {

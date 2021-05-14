@@ -9,6 +9,7 @@
     <modules>
         <module>g-flow</module>
         <module>g-common</module>
+        <module>g-rest</module>
     </modules>
     <name>gengine</name>
     <description>Demo project for Spring Boot</description>
