@@ -1,0 +1,43 @@
+server:
+  port: 9000
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://94.191.68.209:8761/eureka/
+
+
+management:
+  security:
+    enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
+    flowable:
+      enabled: true
+
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+  application:
+    name: grest
+  data:
+    redis:
+      repositories:
+        enabled: false
+  boot:
+    admin:
+      client:
+        url: http://127.0.0.1:8769
+
+
+logging:
+  level:
+    org.springframework.cloud.openfeign: debug
+    org.springframework.cloud.sleuth: debug
