@@ -10,6 +10,8 @@
         <module>g-flow</module>
         <module>g-common</module>
         <module>g-rest</module>
+        <module>g-compile</module>
+        <module>g-engine</module>
     </modules>
     <name>gengine</name>
     <description>Demo project for Spring Boot</description>

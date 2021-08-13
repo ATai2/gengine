@@ -1,7 +1,0 @@
-import com.atai.groovy.*
-
-class %s implements EngineGroovyModuleRule {
-    boolean run(Object context){
-        %s //place holder
-    }
-}
