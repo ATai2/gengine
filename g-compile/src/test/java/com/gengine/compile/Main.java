@@ -16,11 +16,11 @@ public class Main {
         int result = compiler.run(null, null, null, "D:\\code\\gengine\\g-compile\\src\\main\\java\\com\\gengine\\compile\\section1\\MyClass.java");
         System.out.println("Compile result code = " + result);
 //执行java 命令 , 空参数, 所在文件夹
-        Process process = Runtime.getRuntime().exec("java Test", null, new File(""));
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        String str;
-        while ((str = bufferedReader.readLine()) != null) {
-            System.out.println(str);
-        }
+//        Process process = Runtime.getRuntime().exec("java Test", null, new File(""));
+//        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+//        String str;
+//        while ((str = bufferedReader.readLine()) != null) {
+//            System.out.println(str);
+//        }
     }
 }
