@@ -12,6 +12,11 @@ GNU 版本，Flex
 
 
 
+# java生态链的解析器
+JSqlParser
 
+# 语法分析
+acc（或 GNU 的版本，Bison）、Antlr、JavaCC
 
 参考：https://github.com/antlr/grammars-v4/blob/master/sql/mysql/Positive-Technologies/MySqlLexer.g4
+https://resources.jointjs.com/demos/javascript-ast
