@@ -12,6 +12,7 @@
         <module>g-rest</module>
         <module>g-compile</module>
         <module>g-engine</module>
+        <module>g-sql</module>
     </modules>
     <name>gengine</name>
     <description>Demo project for Spring Boot</description>
@@ -107,7 +108,16 @@
         </dependencies>
 
     </dependencyManagement>
-
+    <repository>
+        <id>spring</id>
+        <url>https://maven.aliyun.com/repository/spring</url>
+        <releases>
+            <enabled>true</enabled>
+        </releases>
+        <snapshots>
+            <enabled>true</enabled>
+        </snapshots>
+    </repository>
     <build>
         <plugins>
             <plugin>
